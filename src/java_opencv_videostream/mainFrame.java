@@ -20,8 +20,17 @@ public class mainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    mainFrame frame = new mainFrame();
+                	mainFrame frame = new mainFrame();
+                	//WeakReference<mainFrame> f = new WeakReference<mainFrame>(frame);            
                     frame.setVisible(true);
+                    
+                    ExecutorService pool = getThreadPool();
+                    //WeakReference <cvThread> cvt = new cvThread();
+                    
+                    pool.submit(new cvThread(frame));
+                    pool.shutdown();
+              
+                   // new cvThread().start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -38,13 +47,7 @@ public class mainFrame extends JFrame {
         setContentPane(container);
         container.setLayout(null);
         
-        ExecutorService pool = getThreadPool();
-        //WeakReference <cvThread> cvt = new cvThread();
-        
-        pool.submit(new cvThread());
-        pool.shutdown();
-  
-       // new cvThread().start();
+       
     }
 	
 	private static ExecutorService getThreadPool() {
